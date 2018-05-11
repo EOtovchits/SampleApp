@@ -1,0 +1,13 @@
+server:
+  port: 8081
+common:
+  groupsNum: 10
+  threadsNum: 5
+  overflowPrevType: SIMPLIFIED_RR
+  queueMaxSize: 50
+  workingPeriod: 5000
+  rrThreshold: 50
+testing:
+  enabled: true
+  mode: RANDOM
+  pumpingPeriod: 100
