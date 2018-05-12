@@ -14,6 +14,12 @@ import java.util.stream.Collectors;
 import static cft.sample.app.exceptions.ErrCodes.QUEUE_MAX_SIZE_EXCEEDED;
 import static cft.sample.app.scheduler.OverflowPreventionType.INADVANCE;
 
+/**
+ * Here we keep the queues w/ item ids. Each queue (an ArrayList actually)
+ * keeps the item ids of some group id, so the number of queues is equal to
+ * the number of group ids. The item ids come here already in some order.
+ */
+
 @Slf4j
 @Component
 public class Container {
@@ -28,7 +34,16 @@ public class Container {
         quesues = new HashMap<>();
     }
 
-    public void validateQueueCapacity(Long groupId, Long itemId) {
+    /**
+     * Some optional validation. When 'common.overflowPrevType' param is INADVANCE
+     * we throw away incoming item id, if its amount for some group id is more than
+     * 'common.queueMaxSize' parameter value.
+     *
+     * @param groupId - group id
+     * @param itemId  - incoming item id
+     * @throws SampleAppException - throw this when queue is full for this group id
+     */
+    public void validateQueueCapacity(Long groupId, Long itemId) throws SampleAppException {
         if (appProperties.getOverflowPrevType() != INADVANCE) {
             return;
         }
@@ -44,6 +59,12 @@ public class Container {
         }
     }
 
+    /**
+     * Add new item id the it's queue
+     * @param groupId - group id
+     * @param itemId - item id
+     * @return - so far always return true
+     */
     public synchronized Boolean addItem(Long groupId, Long itemId) {
 
         List<Long> items = quesues.get(groupId);
@@ -59,6 +80,11 @@ public class Container {
         return true;
     }
 
+    /**
+     * Return and delete the item ids queue related to some group id
+     * @param groupId - group id
+     * @return - list of item ids related to group id
+     */
     public List<Long> getAndCleanByGroupId(Long groupId) {
 
         List<Long> items;
@@ -75,6 +101,11 @@ public class Container {
         }
     }
 
+    /**
+     * Return and delete the list of pairs (group id : item id) related to some group id
+     * @param groupId - group id
+     * @return - list of pairs (group id : item id) related to group id
+     */
     public List<Pair<Long, Long>> getAsPairAndCleanByGroupId(Long groupId) {
 
         List<Long> items;
@@ -91,6 +122,11 @@ public class Container {
         }
     }
 
+    /**
+     * Returns the sorted list of pairs (group id : item ids amount), representing the current
+     * state of all queues
+     * @return - sorted list of pairs (group id : item ids amount)
+     */
     public List<Pair<Long, Long>> getSnapshot() {
 
         List<Pair<Long, Long>> pairs;

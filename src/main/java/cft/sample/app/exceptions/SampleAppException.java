@@ -2,6 +2,10 @@ package cft.sample.app.exceptions;
 
 import lombok.Data;
 
+/**
+ * Custom exception
+ */
+
 @Data
 public class SampleAppException extends RuntimeException {
 

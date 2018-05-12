@@ -4,9 +4,11 @@ common:
   threadsNum: 5
   overflowPrevType: SIMPLIFIED_RR
   queueMaxSize: 50
+  # Main working thread starting period
   workingPeriod: 5000
   rrThreshold: 15
 testing:
   enabled: true
   mode: RANDOM
+  # A separate thread will pump some testing data to the main app for processing
   pumpingPeriod: 100

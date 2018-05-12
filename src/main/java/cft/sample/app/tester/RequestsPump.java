@@ -10,6 +10,10 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * Generates and sends pairs of group id and item id
+ */
+
 @Slf4j
 @Component
 public class RequestsPump {

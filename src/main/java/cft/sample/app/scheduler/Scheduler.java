@@ -9,6 +9,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+/**
+ * Here in loop (worker() method) we analyse the queues w/ item ids and process them according to the selected strategy
+ */
+
 @Component
 public class Scheduler {
 

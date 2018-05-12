@@ -11,6 +11,10 @@ import java.util.Map;
 
 import static cft.sample.app.exceptions.ErrCodes.ORDERING_ERROR;
 
+/**
+ * Implementation of incoming information validation
+ */
+
 @Slf4j
 @Component
 public class RequestValidatorImpl implements RequestValidator {
@@ -22,8 +26,17 @@ public class RequestValidatorImpl implements RequestValidator {
         maxValuesMap = new HashMap<>();
     }
 
+    /**
+     * Validates the order of new incoming item ids for some group id. If new item id is less than one
+     * already cached - exception is raised
+     *
+     * @param groupId - group id
+     * @param itemId  - item id
+     * @return - so far returns true if no issues found, otherwise exception thrown
+     * @throws SampleAppException - raised when new item id for some particular group id is less than cached one
+     */
     @Override
-    public Boolean validateIncomingIdOrder(Long groupId, Long itemId) {
+    public Boolean validateIncomingIdOrder(Long groupId, Long itemId) throws SampleAppException {
 
         Long savedValue = maxValuesMap.get(groupId);
 

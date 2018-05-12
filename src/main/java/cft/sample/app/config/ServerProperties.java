@@ -11,5 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "server")
 public class ServerProperties {
 
+    /**
+     * Port num. Used by Spring
+     */
     private int port;
 }

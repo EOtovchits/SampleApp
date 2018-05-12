@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * Worker class to implement the 'simple round robin' overflow prevention logic
+ */
+
 @Slf4j
 @Component
 public class WorkerSimpleRR extends WorkerAbstract implements SchedulerVisitor {
@@ -25,7 +29,7 @@ public class WorkerSimpleRR extends WorkerAbstract implements SchedulerVisitor {
     @Autowired
     private Container container;
 
-    WorkerSimpleRR() {
+    public WorkerSimpleRR() {
     }
 
     @PostConstruct
@@ -40,11 +44,20 @@ public class WorkerSimpleRR extends WorkerAbstract implements SchedulerVisitor {
     }
 
     @Override
-    public Boolean handleSimpleRaundRobin(Handler handler) {
+    public Boolean handleSimpleRoundRobin(Handler handler) {
         work(handler);
         return true;
     }
 
+    /**
+     * Iterates through container snapshot and extracts the list of item ids for each
+     * group id. After this tries to compose the small sets of item ids into a single
+     * list. If success, sends it along w/ large sets to the handler to the following
+     * processing.
+     *
+     * @param handler - handles the pair group id : item id
+     * @return - so far always returns true
+     */
     @Override
     protected Boolean work(Handler handler) {
         List<Pair<Long, Long>> snapshot = container.getSnapshot();
@@ -58,7 +71,6 @@ public class WorkerSimpleRR extends WorkerAbstract implements SchedulerVisitor {
 
             if (temp.size() >= appProperties.getRrThreshold()) {
 
-                /// Try to simulate runnables overflow
                 threadPoolExecutor.execute(() -> new ArrayList<>(temp).stream().forEach(pair ->
                         handler.processItem(pair.getKey(), pair.getValue())
                 ));

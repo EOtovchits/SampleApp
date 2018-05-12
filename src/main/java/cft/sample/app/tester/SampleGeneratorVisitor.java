@@ -2,6 +2,10 @@ package cft.sample.app.tester;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Implementation of testing data generation strategies (look at cft.sample.app.tester.DataGenerator.MODE)
+ */
+
 public final class SampleGeneratorVisitor implements DataGenerator.MODE.ModeVisitor<GroupItemPair> {
 
     private Long counter = 0L;

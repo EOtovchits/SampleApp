@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
 
+/**
+ * A simple controller to accept the incoming data (group id and item id)
+ */
+
 @Slf4j
 @RestController
 @RequestMapping("/next")

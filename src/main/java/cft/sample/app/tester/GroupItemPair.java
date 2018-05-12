@@ -3,6 +3,10 @@ package cft.sample.app.tester;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Represents pair of group id : item id
+ */
+
 @Getter
 @Setter
 public class GroupItemPair {

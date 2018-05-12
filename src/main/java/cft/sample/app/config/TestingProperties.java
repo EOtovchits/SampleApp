@@ -12,7 +12,13 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "testing")
 public class TestingProperties {
 
+    /**
+     * Marks that testing data pumping was enabled or not
+     */
     private Boolean enabled;
 
+    /**
+     * The way testing data pump generates the testing data
+     */
     private DataGenerator.MODE mode;
 }
