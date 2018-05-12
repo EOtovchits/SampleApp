@@ -2,8 +2,8 @@ server:
   port: 8081
 common:
   threadsNum: 5
-  overflowPrevType: SIMPLIFIED_RR
-  queueMaxSize: 50
+  overflowPrevType: INADVANCE
+  queueMaxSize: 4
   workingPeriod: 5000
   rrThreshold: 15
 testing:

@@ -39,7 +39,7 @@ public class Container {
             savedItems = quesues.get(groupId);
         }
 
-        if (savedItems != null && savedItems.size() > appProperties.getQueueMaxSize()) {
+        if (savedItems != null && (savedItems.size() + 1) > appProperties.getQueueMaxSize()) {
             throw new SampleAppException(QUEUE_MAX_SIZE_EXCEEDED, groupId, itemId);
         }
     }

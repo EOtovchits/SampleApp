@@ -23,7 +23,6 @@ public class Scheduler {
 
     @Scheduled(fixedRateString = "${common.workingPeriod}")
     private void worker() {
-        //return;
         appProperties.getOverflowPrevType().schedule(getByOverflowPrevType(appProperties.getOverflowPrevType()), handler);
     }
 

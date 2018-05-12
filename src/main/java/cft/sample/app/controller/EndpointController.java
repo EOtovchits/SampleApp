@@ -15,7 +15,7 @@ import java.text.MessageFormat;
 @Slf4j
 @RestController
 @RequestMapping("/next")
-public class EndpointHandler {
+public class EndpointController {
 
     @Autowired
     ServerProperties serverProperties;

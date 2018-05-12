@@ -4,8 +4,6 @@ import cft.sample.app.config.TestingProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 @Component
 public class DataGenerator {
 
@@ -43,7 +41,7 @@ public class DataGenerator {
     }
 
     private static TestingProperties testingProperties;
-    private static SampleVisitor sampleVisitor = new SampleVisitor();
+    private static SampleGeneratorVisitor sampleVisitor = new SampleGeneratorVisitor();
 
     @Autowired
     public void setTestingProperties(TestingProperties testingProperties) {
@@ -52,26 +50,5 @@ public class DataGenerator {
 
     public static GroupItemPair get() {
         return testingProperties.getMode().getPair(sampleVisitor);
-    }
-}
-
-final class SampleVisitor implements DataGenerator.MODE.ModeVisitor<GroupItemPair> {
-
-    private Long counter = 0L;
-
-    @Override
-    public GroupItemPair getLinear() {
-        return new GroupItemPair(1L, ++counter);
-    }
-
-    @Override
-    public GroupItemPair getRandom() {
-        return new GroupItemPair(ThreadLocalRandom.current().nextLong(0, 3),
-                ++counter);
-    }
-
-    @Override
-    public GroupItemPair getManual() {
-        return null;
     }
 }
