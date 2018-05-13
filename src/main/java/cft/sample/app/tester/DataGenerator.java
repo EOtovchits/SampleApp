@@ -1,8 +1,12 @@
 package cft.sample.app.tester;
 
+import cft.sample.app.config.ServerProperties;
 import cft.sample.app.config.TestingProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A testing data (group and item id) generator
@@ -59,6 +63,8 @@ public class DataGenerator {
     }
 
     private static TestingProperties testingProperties;
+    private static ServerProperties serverProperties;
+
     private static SampleGeneratorVisitor sampleVisitor = new SampleGeneratorVisitor();
 
     @Autowired
@@ -66,7 +72,24 @@ public class DataGenerator {
         DataGenerator.testingProperties = testingProperties;
     }
 
-    public static GroupItemPair get() {
+    @Autowired
+    public void setServerProperties(ServerProperties serverProperties) {
+        DataGenerator.serverProperties = serverProperties;
+    }
+
+    public static Map<String, Long> getAsMap() {
+
+        GroupItemPair pair = get();
+
+        Map<String, Long> map = new HashMap<>();
+        map.put("groupId", pair.getGroupId());
+        map.put("itemId", pair.getItemId());
+        map.put("port", Long.valueOf(serverProperties.getPort()));
+
+        return map;
+    }
+
+    private static GroupItemPair get() {
         return testingProperties.getMode().getPair(sampleVisitor);
     }
 }

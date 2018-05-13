@@ -6,6 +6,7 @@ import cft.sample.app.exceptions.SampleAppException;
 import cft.sample.app.validators.RequestValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,13 +50,14 @@ public class EndpointController {
 
         } catch (NumberFormatException ex) {
             log.error("Smth. went wrong: ", ex);
-            return new ResponseEntity<>(MessageFormat.format("Got NumberFormatException when parsing groupId = [{}] and itemId = [{}]",
-                    groupId, itemId), null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(MessageFormat.format("Got NumberFormatException when parsing groupId = [{0}] and " +
+                            "itemId = [{1}]", groupId, itemId), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 
         } catch (SampleAppException ex) {
             log.error("Smth. went wrong: ", ex);
-            return new ResponseEntity<>(MessageFormat.format("Got SampleAppException w/ code [{}] when parsing groupId = [{}] and itemId = [{}]",
-                    ex.getErrMess(), groupId, itemId), null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(MessageFormat.format("Got SampleAppException w/ code [{0}] when parsing " +
+                            "groupId = [{1,number,#}] and itemId = [{2,number,#}]",
+                    ex.getErrMess(), ex.getGroupId(), ex.getItemId()), new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
     }
 }

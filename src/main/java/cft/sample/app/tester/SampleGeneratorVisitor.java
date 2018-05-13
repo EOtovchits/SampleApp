@@ -1,5 +1,7 @@
 package cft.sample.app.tester;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -24,6 +26,6 @@ public final class SampleGeneratorVisitor implements DataGenerator.MODE.ModeVisi
     @Override
     public GroupItemPair getManual() {
         /// Implement some another custom scenario
-        return new GroupItemPair(1L, 1234L);
+        throw new NotImplementedException();
     }
 }

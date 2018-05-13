@@ -18,7 +18,7 @@ import javax.annotation.PostConstruct;
 @Component
 public class RequestsPump {
 
-    private static final String URI_TEMPLATE = "http://localhost:%d/next/group/%d/item/%d";
+    private static final String URI_TEMPLATE = "http://localhost:{port}/next/group/{groupId}/item/{itemId}";
 
     @Autowired
     ServerProperties serverProperties;
@@ -40,11 +40,7 @@ public class RequestsPump {
             return;
         }
 
-        GroupItemPair pair = DataGenerator.get();
-
-        final String URI = String.format(URI_TEMPLATE, serverProperties.getPort(), pair.getGroupId(), pair.getItemId());
-
-        String result = restTemplate.getForObject(URI, String.class);
+        String result = restTemplate.getForObject(URI_TEMPLATE, String.class, DataGenerator.getAsMap());
 
         log.info("Got some result: [{}]", result);
     }
